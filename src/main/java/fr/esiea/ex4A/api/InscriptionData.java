@@ -13,10 +13,10 @@ public class InscriptionData {
 
     @JsonCreator
     public InscriptionData(@JsonProperty("userEmail") String userEmail, @JsonProperty("userName") String userName,
-                           @JsonProperty("userTweeter")  String userTweeter,
-                           @JsonProperty("userCountry")  UserCountry userCountry,
-                           @JsonProperty("userSex")  UserSex userSex,
-                           @JsonProperty("userSexPref")  UserSex userSexPref) {
+                           @JsonProperty("userTweeter") String userTweeter,
+                           @JsonProperty("userCountry") UserCountry userCountry,
+                           @JsonProperty("userSex") UserSex userSex,
+                           @JsonProperty("userSexPref") UserSex userSexPref) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userTweeter = userTweeter;
@@ -63,5 +63,9 @@ public class InscriptionData {
 
     public MatchData toMatch() {
         return new MatchData(userName, userTweeter);
+    }
+
+    public AgeReference toAgeReference() {
+        return new AgeReference(userName, userCountry);
     }
 }

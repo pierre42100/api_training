@@ -10,10 +10,10 @@ import java.util.List;
 @RestController
 public class ApiController {
 
-    private final ApiRepository apiRepository;
+    private final ApiService apiService;
 
-    public ApiController(ApiRepository apiRepository) {
-        this.apiRepository = apiRepository;
+    public ApiController(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     @PostMapping(path = "/api/inscription")
@@ -21,7 +21,7 @@ public class ApiController {
         if (inscriptionData == null || !inscriptionData.isValid())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        apiRepository.register(inscriptionData);
+        apiService.register(inscriptionData);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -35,6 +35,6 @@ public class ApiController {
         if (c == null || name == null || name.isBlank())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(apiRepository.getMatches(name, c), HttpStatus.OK);
+        return new ResponseEntity<>(apiService.getMatches(name, c), HttpStatus.OK);
     }
 }
