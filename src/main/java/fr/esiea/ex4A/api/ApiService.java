@@ -11,8 +11,6 @@ import java.util.Map;
 @Service
 public class ApiService {
 
-    private static final int AGE_MARGIN = 4;
-
     final AgifyClient agifyClient;
     final Map<AgeReference, InscriptionData> inscriptions = new HashMap<>();
     final Map<AgeReference, Integer> ageCache = new HashMap<>();
@@ -21,17 +19,13 @@ public class ApiService {
         this.agifyClient = agifyClient;
     }
 
-    public void register(InscriptionData data) {
-        try {
-            if (!ageCache.containsKey(data.toAgeReference())) {
-                var age = agifyClient.getAge(data.getUserName(), data.getUserCountry().toString()).execute().body();
-                if (age != null) {
-                    inscriptions.put(data.toAgeReference(), data);
-                    ageCache.put(data.toAgeReference(), age.getAge());
-                }
+    public void register(InscriptionData data) throws Exception {
+        if (!ageCache.containsKey(data.toAgeReference())) {
+            var age = agifyClient.getAge(data.getUserName(), data.getUserCountry().toString()).execute().body();
+            if (age != null) {
+                inscriptions.put(data.toAgeReference(), data);
+                ageCache.put(data.toAgeReference(), age.getAge());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -40,28 +34,22 @@ public class ApiService {
     }
 
     public List<MatchData> getMatches(String name, UserCountry country) {
-        List<MatchData> results = new ArrayList<>();
-
         // Search the person in the list
         AgeReference persRef = new AgeReference(name, country);
         if (!this.inscriptions.containsKey(persRef))
-            return results;
-        InscriptionData pers = inscriptions.get(persRef);
+            return new ArrayList<>();
 
+        return doSearchMatches(inscriptions.get(persRef));
+    }
 
+    private List<MatchData> doSearchMatches(InscriptionData pers) {
+        List<MatchData> results = new ArrayList<>();
         for (var client : this.inscriptions.values()) {
-            if (client == pers)
+            if (client == pers || Math.abs(getAge(pers) - getAge(client)) > 4 ||
+                client.getUserSex() != pers.getUserSexPref() || client.getUserSexPref() != pers.getUserSex())
                 continue;
-
-            if(client.getUserSex() != pers.getUserSexPref() || client.getUserSexPref() != pers.getUserSex())
-                continue;
-
-            if(Math.abs(getAge(pers) - getAge(client)) > AGE_MARGIN)
-                continue;
-
             results.add(client.toMatch());
         }
-
         return results;
     }
 }

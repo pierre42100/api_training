@@ -21,7 +21,11 @@ public class ApiController {
         if (inscriptionData == null || !inscriptionData.isValid())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        apiService.register(inscriptionData);
+        try {
+            apiService.register(inscriptionData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
