@@ -1,10 +1,11 @@
 package fr.esiea.ex4A.api;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ApiController {
@@ -25,4 +26,15 @@ public class ApiController {
     }
 
 
+    @GetMapping(path = "/api/matches", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<MatchData>> matches(@RequestParam(name = "userName") String name,
+                                            @RequestParam(name = "userCountry") String country) {
+
+        UserCountry c = UserCountry.fromString(country);
+
+        if (c == null || name == null || name.isBlank())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(apiRepository.getMatches(name, c), HttpStatus.OK);
+    }
 }

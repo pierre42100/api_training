@@ -60,4 +60,8 @@ public class InscriptionData {
     public UserSex getUserSexPref() {
         return userSexPref;
     }
+
+    public MatchData toMatch() {
+        return new MatchData(userName, userTweeter);
+    }
 }
