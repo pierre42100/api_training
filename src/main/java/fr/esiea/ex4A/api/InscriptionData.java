@@ -12,8 +12,7 @@ public class InscriptionData {
     private final UserSex userSexPref;
 
     @JsonCreator
-    public InscriptionData(@JsonProperty("userEmail") String userEmail,
-                           @JsonProperty("userName") String userName,
+    public InscriptionData(@JsonProperty("userEmail") String userEmail, @JsonProperty("userName") String userName,
                            @JsonProperty("userTweeter")  String userTweeter,
                            @JsonProperty("userCountry")  UserCountry userCountry,
                            @JsonProperty("userSex")  UserSex userSex,
