@@ -1,7 +1,5 @@
 package fr.esiea.ex4A.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.esiea.ex4A.hello.HelloData;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,7 +25,6 @@ class ApiControllerTest {
     }
 
 
-
     @Test
     void valid_inscription() throws Exception {
 
@@ -43,8 +37,8 @@ class ApiControllerTest {
         object.put("userSexPref", "F");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/inscription")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(object.toString()))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(object.toString()))
             .andExpect(status().isOk());
     }
 
@@ -87,8 +81,8 @@ class ApiControllerTest {
             .perform(MockMvcRequestBuilders.get("/api/matches?userName=toto&userCountry=CA"))
             .andExpect(status().isOk())
             .andExpect(content().json("""
-                       []
-                        """));
+                []
+                 """));
 
     }
 }
