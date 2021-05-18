@@ -12,7 +12,7 @@ public enum UserSex {
         return switch (this) {
             case M -> "M";
             case F -> "F";
-            case O -> "O";
+            default -> "O";
         };
     }
 
