@@ -1,12 +1,30 @@
 package fr.esiea.ex4A.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class InscriptionData {
-    private String userEmail;
-    private String userName;
-    private String userTweeter;
-    private UserCountry userCountry;
-    private UserSex userSex;
-    private UserSex userSexPref;
+    private final String userEmail;
+    private final String userName;
+    private final String userTweeter;
+    private final UserCountry userCountry;
+    private final UserSex userSex;
+    private final UserSex userSexPref;
+
+    @JsonCreator
+    public InscriptionData(@JsonProperty("userEmail") String userEmail,
+                           @JsonProperty("userName") String userName,
+                           @JsonProperty("userTweeter")  String userTweeter,
+                           @JsonProperty("userCountry")  UserCountry userCountry,
+                           @JsonProperty("userSex")  UserSex userSex,
+                           @JsonProperty("userSexPref")  UserSex userSexPref) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userTweeter = userTweeter;
+        this.userCountry = userCountry;
+        this.userSex = userSex;
+        this.userSexPref = userSexPref;
+    }
 
     boolean isValid() {
         return userEmail != null &&
@@ -24,47 +42,23 @@ public class InscriptionData {
         return userEmail;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getUserTweeter() {
         return userTweeter;
     }
 
-    public void setUserTweeter(String userTweeter) {
-        this.userTweeter = userTweeter;
-    }
-
     public UserCountry getUserCountry() {
         return userCountry;
-    }
-
-    public void setUserCountry(UserCountry userCountry) {
-        this.userCountry = userCountry;
     }
 
     public UserSex getUserSex() {
         return userSex;
     }
 
-    public void setUserSex(UserSex userSex) {
-        this.userSex = userSex;
-    }
-
     public UserSex getUserSexPref() {
         return userSexPref;
-    }
-
-    public void setUserSexPref(UserSex userSexPref) {
-        this.userSexPref = userSexPref;
     }
 }
