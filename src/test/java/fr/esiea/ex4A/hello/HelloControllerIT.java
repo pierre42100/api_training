@@ -37,12 +37,12 @@ class HelloControllerIT {
             .perform(MockMvcRequestBuilders.get("/hello?name=test"))
             .andExpect(status().isOk())
             .andExpect(content().json("""
-                        {
-                            "type":"hello",
-                            "name":"test",
-                            "completeSentence":"hello test!"}
-                        }
-                        """));
+                {
+                    "type":"hello",
+                    "name":"test",
+                    "completeSentence":"hello test!"}
+                }
+                """));
 
         verify(repository).getHelloFor("test");
     }
