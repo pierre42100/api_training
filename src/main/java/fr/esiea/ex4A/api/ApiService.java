@@ -29,6 +29,14 @@ public class ApiService {
         }
     }
 
+    public Map<AgeReference, InscriptionData> getInscriptions() {
+        return inscriptions;
+    }
+
+    public Map<AgeReference, Integer> getAgeCache() {
+        return ageCache;
+    }
+
     public int getAge(InscriptionData data) {
         return ageCache.get(data.toAgeReference());
     }
